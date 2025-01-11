@@ -14,7 +14,7 @@ Requirements:
    b. A description of the status code.
 
 Example Responses:
-- For 200 (OK):
+- For 200 (OK):   
   Request: /status-info?code=200
   Response:
   {
@@ -49,6 +49,47 @@ Example Responses:
 List of Status Codes to Handle:
 200, 201, 204, 400, 401, 403, 404, 405, 429, 500, 502, 503, 504
 */
+
+
+app.get("/status-info",(req,res)=>{
+  const code = req.query.code;
+  if(code == 200){
+    let obj = {
+      "status": 200,
+      "message": "OK: The request has succeeded. The meaning of this status depends on the HTTP method used."
+    }
+    return res.send(obj);
+  }
+  else if(code == 404){
+    let obj = {
+      "status": 404,
+      "message": "Not Found: The server has not found anything matching the request URI. This is often caused by a missing page or resource."
+    }
+    return res.send(obj);
+  }
+
+  
+  else if(code == 500){
+    let obj = {
+      "status": 500,
+      "message": "Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request."
+    }
+    return res.send(obj);
+  }
+  else if(code == 400){
+    let obj = {
+      "status": 400,
+      "message": "Bad Request: The server cannot process the request due to client-side errors (e.g., malformed syntax)."
+    }
+    return res.send(obj);
+
+  }
+})
+
+app.get('/',function(req,res){
+  return res.send('<h1>Helllo World </h1>')
+})
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
